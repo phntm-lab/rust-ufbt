@@ -19,14 +19,16 @@
 //! - [`build`] — manifest parsing, asset compilation and application linking.
 //! - [`installer`] — top-level orchestration of SDK and toolchain installation.
 //!
-//! # Licensing
+//! # Errors
 //!
-//! This crate is a port of `dart-ufbt` and is distributed under the GNU General Public
-//! License version 3. Any crate linking against it must be GPL compatible.
+//! Each module defines its own error enum and every operation returns the narrowest one
+//! that fits. [`Error`] aggregates them all and every module error converts into it with
+//! `?`, so callers that drive several operations can propagate a single type.
 
 #![deny(missing_docs)]
 
 pub mod build;
+mod error;
 pub mod installer;
 pub mod log;
 pub mod net;
@@ -34,3 +36,5 @@ pub mod paths;
 pub mod sdk;
 pub mod state;
 pub mod toolchain;
+
+pub use error::{Error, Result};
