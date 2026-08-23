@@ -1,11 +1,13 @@
 //! Flipper Zero SDK channel resolution and deployment.
 
+mod channel_loader;
 mod deploy_task;
 mod directory_index;
 mod error;
 mod file_type;
 mod loader;
 
+pub use channel_loader::UpdateChannelLoader;
 pub use deploy_task::{BundleTaskBuilder, DeployTask, DeployTaskBuilder};
 pub use directory_index::{DirectoryIndex, IndexChannel, IndexFile, IndexVersion};
 pub use error::SdkError;

@@ -17,8 +17,8 @@ use crate::net::FileFetcher;
 /// carrying it is always replaced rather than compared.
 pub const VERSION_UNKNOWN: &str = "unknown";
 
-const MODE_METADATA_KEY: &str = "mode";
-const VERSION_METADATA_KEY: &str = "version";
+pub(super) const MODE_METADATA_KEY: &str = "mode";
+pub(super) const VERSION_METADATA_KEY: &str = "version";
 const URL_METADATA_KEY: &str = "url";
 const FILE_PATH_METADATA_KEY: &str = "file_path";
 
