@@ -1,14 +1,36 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+//! Native Rust port of [uFBT](https://github.com/flipperdevices/flipperzero-ufbt), the
+//! Flipper Zero micro build tool.
+//!
+//! The crate deploys a Flipper Zero SDK and an ARM GCC toolchain into a local uFBT home
+//! directory and builds `.fap` / `.fal` applications from an `application.fam` manifest,
+//! without requiring Python, SCons or a shell.
+//!
+//! Every long-running operation reports structured [`log`] events instead of writing to
+//! standard output, so a GUI can render progress rather than parse text.
+//!
+//! # Modules
+//!
+//! - [`paths`] — layout of the uFBT home directory.
+//! - [`state`] — persisted deployment state (`ufbt_state.json`).
+//! - [`log`] — structured logging: levels, progress, events, sinks.
+//! - [`net`] — HTTP downloads with progress reporting.
+//! - [`sdk`] — SDK channel resolution and deployment.
+//! - [`toolchain`] — ARM GCC toolchain deployment.
+//! - [`build`] — manifest parsing, asset compilation and application linking.
+//! - [`installer`] — top-level orchestration of SDK and toolchain installation.
+//!
+//! # Licensing
+//!
+//! This crate is a port of `dart-ufbt` and is distributed under the GNU General Public
+//! License version 3. Any crate linking against it must be GPL compatible.
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+#![deny(missing_docs)]
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
-}
+pub mod build;
+pub mod installer;
+pub mod log;
+pub mod net;
+pub mod paths;
+pub mod sdk;
+pub mod state;
+pub mod toolchain;

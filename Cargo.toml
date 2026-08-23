@@ -1,6 +1,46 @@
 [package]
 name = "rust-ufbt"
 version = "0.1.0"
+authors = ["Lemn4t"]
 edition = "2024"
+rust-version = "1.85"
+description = "Rust port of uFBT - Flipper Zero SDK deployment and FAP build tool."
+repository = "https://github.com/phntm-lab/rust-ufbt"
+homepage = "https://github.com/phntm-lab/rust-ufbt"
+license = "GPL-3.0-only"
+keywords = ["flipper-zero", "embedded", "sdk", "build-tool", "fap"]
+categories = ["development-tools::build-utils", "embedded"]
+exclude = [".claude/"]
 
 [dependencies]
+chrono = { version = "0.4.45", default-features = false, features = [
+    "clock",
+    "std",
+] }
+image = "0.25.10"
+md-5 = "0.11.0"
+regex = "1.13.1"
+reqwest = { version = "0.13.4", default-features = false, features = [
+    "rustls",
+    "stream",
+    "charset",
+    "http2",
+] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.151", features = ["preserve_order"] }
+thiserror = "2.0.20"
+tokio = { version = "1.53.1", default-features = false, features = [
+    "rt",
+    "rt-multi-thread",
+    "process",
+    "fs",
+    "io-util",
+    "macros",
+    "sync",
+] }
+zip = "8.6.0"
+
+[dev-dependencies]
+tempfile = "3.27.0"
+tokio = { version = "1.53.1", features = ["full"] }
+wiremock = "0.6.5"
