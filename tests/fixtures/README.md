@@ -30,3 +30,26 @@ default width of 72 unless the key says otherwise.
 | `bar_7_of_72` | `progress_bar(running, 7 of 72)` |
 | `bar_width_<n>` | `progress_bar(running, 1 of 3, width <n>)` |
 | `bar_width_10_done` | `progress_bar(finished, 1 of 3, width 10)` |
+
+## `console_sink.json`
+
+Everything `log::ConsoleSink` writes for a given run of events, captured through an injected
+output. Unless a key says otherwise the bar is 72 wide and one `#` stands for 300 units.
+
+| Key | Events fed to the sink |
+| --- | --- |
+| `message` | one message event |
+| `build` | one build event |
+| `raw_newline` / `raw_no_newline` | one raw event, with and without a line break |
+| `started` | a task starting with the title `Downloading` |
+| `started_empty_title` | a task starting without a title |
+| `running_determinate` | running, 50 of 200 |
+| `running_indeterminate` | started, then running at 299, 300, 1500 and 1500 with no total |
+| `running_indeterminate_without_started` | running at 900 with no total, never started |
+| `finished_determinate` | finished, 200 of 200 |
+| `finished_indeterminate` | started, running at 600, finished at 1000, all with no total |
+| `failed` | a failed task |
+| `two_tasks` | two tasks with different ids, interleaved |
+| `reused_id_after_finish` | a task finished, then started again under the same id |
+| `custom_bar_width` | running, 1 of 3, bar 10 wide |
+| `custom_units_per_hash` | started, then running at 10 with no total, 4 units per `#` |

@@ -1,0 +1,18 @@
+{
+  "message": "14:05:09.007 [W] hi\n",
+  "build": "\tCC\ta.c\n\t\t-Os\n",
+  "raw_newline": "plain\n",
+  "raw_no_newline": "plain",
+  "started": "Downloading\n",
+  "started_empty_title": "",
+  "running_determinate": "\r##################                                                        25.0%",
+  "running_indeterminate": "Downloading\n#####",
+  "running_indeterminate_without_started": "###",
+  "finished_determinate": "\r######################################################################## 100.0%\n",
+  "finished_indeterminate": "Downloading\n### 100.0%\n",
+  "failed": "\n",
+  "two_tasks": "First\nSecond\n####",
+  "reused_id_after_finish": "Downloading\n### 100.0%\nDownloading\n###",
+  "custom_bar_width": "\r###         33.3%",
+  "custom_units_per_hash": "Downloading\n##"
+}
