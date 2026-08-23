@@ -59,6 +59,14 @@ pub enum SdkError {
     /// The selected file has an empty download URL.
     #[error("Invalid file url")]
     InvalidFileUrl,
+    /// A deploy task named a loader mode without the parameter that mode needs.
+    #[error("Missing {param} parameter for mode {mode}")]
+    MissingParam {
+        /// Mode key taken from the deploy task.
+        mode: String,
+        /// Name of the parameter the mode requires.
+        param: String,
+    },
     /// The SDK bundle or the directory index could not be downloaded.
     #[error(transparent)]
     Fetch(#[from] FetchError),

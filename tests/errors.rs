@@ -58,6 +58,14 @@ fn sdk_error_display() {
         "Loader is not initialized"
     );
     assert_eq!(
+        SdkError::MissingParam {
+            mode: "branch".to_owned(),
+            param: "branch".to_owned(),
+        }
+        .to_string(),
+        "Missing branch parameter for mode branch"
+    );
+    assert_eq!(
         SdkError::InvalidJson {
             message: "Unexpected character".to_owned(),
         }
