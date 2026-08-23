@@ -1229,6 +1229,7 @@ dependencies = [
  "chrono",
  "image",
  "md-5",
+ "percent-encoding",
  "regex",
  "reqwest",
  "rustls",

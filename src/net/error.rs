@@ -12,6 +12,12 @@ pub enum FetchError {
         /// Reason phrase returned by the server.
         reason: String,
     },
+    /// The URL could not be parsed.
+    #[error("Invalid URL: {url}")]
+    InvalidUrl {
+        /// The text that failed to parse.
+        url: String,
+    },
     /// The TLS backend could not be initialized.
     #[error("TLS initialization failed: {0}")]
     Tls(String),
