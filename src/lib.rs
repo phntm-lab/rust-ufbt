@@ -39,3 +39,4 @@ pub mod toolchain;
 
 pub use error::{Error, Result};
 pub use log::{ConsoleSink, LogEvent, LogLevel, LogSink, Logger};
+pub use paths::Paths;
