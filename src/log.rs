@@ -1,6 +1,7 @@
 //! Structured logging: levels, progress tracking, events and sinks.
 
 mod event;
+pub mod format;
 mod level;
 mod progress;
 

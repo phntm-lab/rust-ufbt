@@ -16,7 +16,9 @@ pub enum LogEvent {
         level: LogLevel,
         /// The message itself, without decoration.
         message: String,
-        /// The message rendered for display, timestamp and level prefix included.
+        /// The message rendered for display, as produced by [`format::message`].
+        ///
+        /// [`format::message`]: super::format::message
         formatted: String,
     },
     /// A build step reported as a tag with a value and optional detail lines.
@@ -29,7 +31,9 @@ pub enum LogEvent {
         value: String,
         /// Additional lines describing the step.
         details: Vec<String>,
-        /// The step rendered for display, indentation included.
+        /// The step rendered for display, as produced by [`format::build`].
+        ///
+        /// [`format::build`]: super::format::build
         formatted: String,
     },
     /// Text passed through verbatim, without a timestamp or a level prefix.
