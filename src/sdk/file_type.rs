@@ -39,6 +39,32 @@ pub enum FileType {
 }
 
 impl FileType {
+    const VALUES: [Self; 14] = [
+        Self::SdkZip,
+        Self::LibZip,
+        Self::Core2FirmwareTgz,
+        Self::ResourcesTgz,
+        Self::ScriptsTgz,
+        Self::UpdateTgz,
+        Self::FirmwareElf,
+        Self::FullBin,
+        Self::FullDfu,
+        Self::FullJson,
+        Self::UpdaterBin,
+        Self::UpdaterDfu,
+        Self::UpdaterElf,
+        Self::UpdaterJson,
+    ];
+
+    /// Resolves a file type from its [`id`](FileType::id), or [`None`] when no known type
+    /// carries it.
+    ///
+    /// The comparison is exact: unlike [`UpdateChannel::by_key`], case is not ignored.
+    #[must_use]
+    pub fn by_id(id: &str) -> Option<Self> {
+        Self::VALUES.into_iter().find(|kind| kind.id() == id)
+    }
+
     /// Identifier of the file type as it appears in the directory index.
     #[must_use]
     pub const fn id(self) -> &'static str {
