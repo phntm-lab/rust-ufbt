@@ -184,7 +184,7 @@ fn process_environment() -> HashMap<String, String> {
         .collect()
 }
 
-fn join(base: &Path, name: &str) -> PathBuf {
+pub(crate) fn join(base: &Path, name: &str) -> PathBuf {
     let mut joined = base.as_os_str().to_os_string();
     joined.push(MAIN_SEPARATOR_STR);
     joined.push(name);

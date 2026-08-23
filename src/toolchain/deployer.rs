@@ -22,11 +22,11 @@ static VERSION_RE: LazyLock<Regex> =
 
 /// Deploys the ARM GCC toolchain the SDK is built with into the uFBT home directory.
 pub struct ToolchainDeployer {
-    #[expect(dead_code)]
-    logger: Arc<Logger>,
-    paths: Paths,
-    #[expect(dead_code)]
-    fetcher: Arc<FileFetcher>,
+    #[cfg_attr(windows, expect(dead_code))]
+    pub(super) logger: Arc<Logger>,
+    pub(super) paths: Paths,
+    #[cfg_attr(windows, expect(dead_code))]
+    pub(super) fetcher: Arc<FileFetcher>,
 }
 
 impl ToolchainDeployer {

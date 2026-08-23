@@ -1,5 +1,7 @@
 //! ARM GCC toolchain deployment.
 
+#[cfg(not(windows))]
+mod deploy_unix;
 mod deployer;
 mod error;
 mod info;
