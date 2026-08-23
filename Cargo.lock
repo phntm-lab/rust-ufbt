@@ -1228,6 +1228,7 @@ version = "0.1.0"
 dependencies = [
  "chrono",
  "image",
+ "indexmap",
  "md-5",
  "percent-encoding",
  "regex",

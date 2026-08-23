@@ -17,6 +17,7 @@ chrono = { version = "0.4.45", default-features = false, features = [
     "clock",
     "std",
 ] }
+indexmap = "2.14.0"
 image = { version = "=0.25.9", default-features = false, features = [
     "png",
     "pnm",
