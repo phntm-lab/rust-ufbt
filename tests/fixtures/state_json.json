@@ -1,0 +1,112 @@
+{
+    "typical": {
+        "values": {
+            "hw_target": "f7",
+            "mode": "channel",
+            "channel": "release",
+            "version": "1.3.4",
+            "json_index": "https://update.flipperzero.one/firmware/directory.json"
+        },
+        "encoded": "{\n    \"hw_target\": \"f7\",\n    \"mode\": \"channel\",\n    \"channel\": \"release\",\n    \"version\": \"1.3.4\",\n    \"json_index\": \"https://update.flipperzero.one/firmware/directory.json\"\n}"
+    },
+    "empty": {
+        "values": {},
+        "encoded": "{}"
+    },
+    "single": {
+        "values": {
+            "hw_target": "f7"
+        },
+        "encoded": "{\n    \"hw_target\": \"f7\"\n}"
+    },
+    "insertion_order": {
+        "values": {
+            "z": "1",
+            "a": "2",
+            "m": "3",
+            "B": "4"
+        },
+        "encoded": "{\n    \"z\": \"1\",\n    \"a\": \"2\",\n    \"m\": \"3\",\n    \"B\": \"4\"\n}"
+    },
+    "nulls": {
+        "values": {
+            "hw_target": null,
+            "version": "0.1.0"
+        },
+        "encoded": "{\n    \"hw_target\": null,\n    \"version\": \"0.1.0\"\n}"
+    },
+    "scalars": {
+        "values": {
+            "int": 42,
+            "negative": -7,
+            "zero": 0,
+            "double": 1.5,
+            "whole_double": 1.0,
+            "bool_true": true,
+            "bool_false": false,
+            "null": null
+        },
+        "encoded": "{\n    \"int\": 42,\n    \"negative\": -7,\n    \"zero\": 0,\n    \"double\": 1.5,\n    \"whole_double\": 1.0,\n    \"bool_true\": true,\n    \"bool_false\": false,\n    \"null\": null\n}"
+    },
+    "nested_object": {
+        "values": {
+            "hw_target": "f7",
+            "details": {
+                "a": "1",
+                "b": {
+                    "c": "2"
+                }
+            },
+            "empty_object": {}
+        },
+        "encoded": "{\n    \"hw_target\": \"f7\",\n    \"details\": {\n        \"a\": \"1\",\n        \"b\": {\n            \"c\": \"2\"\n        }\n    },\n    \"empty_object\": {}\n}"
+    },
+    "lists": {
+        "values": {
+            "empty_list": [],
+            "flat": [
+                "a",
+                "b"
+            ],
+            "mixed": [
+                1,
+                "two",
+                null,
+                true,
+                {
+                    "k": "v"
+                },
+                []
+            ]
+        },
+        "encoded": "{\n    \"empty_list\": [],\n    \"flat\": [\n        \"a\",\n        \"b\"\n    ],\n    \"mixed\": [\n        1,\n        \"two\",\n        null,\n        true,\n        {\n            \"k\": \"v\"\n        },\n        []\n    ]\n}"
+    },
+    "escapes": {
+        "values": {
+            "quote": "say \"hi\"",
+            "backslash": "a\\b",
+            "newline": "a\nb",
+            "carriage": "a\rb",
+            "tab": "a\tb",
+            "backspace": "a\bb",
+            "formfeed": "a\fb",
+            "control": "a\u0001b",
+            "vertical_tab": "a\u000bb",
+            "unit_sep": "a\u001fb",
+            "del": "ab",
+            "line_sep": "a b",
+            "slash": "a/b",
+            "unicode": "Ünïcødé — 日本語",
+            "emoji": "flipper 🐬",
+            "empty": ""
+        },
+        "encoded": "{\n    \"quote\": \"say \\\"hi\\\"\",\n    \"backslash\": \"a\\\\b\",\n    \"newline\": \"a\\nb\",\n    \"carriage\": \"a\\rb\",\n    \"tab\": \"a\\tb\",\n    \"backspace\": \"a\\bb\",\n    \"formfeed\": \"a\\fb\",\n    \"control\": \"a\\u0001b\",\n    \"vertical_tab\": \"a\\u000bb\",\n    \"unit_sep\": \"a\\u001fb\",\n    \"del\": \"ab\",\n    \"line_sep\": \"a b\",\n    \"slash\": \"a/b\",\n    \"unicode\": \"Ünïcødé — 日本語\",\n    \"emoji\": \"flipper 🐬\",\n    \"empty\": \"\"\n}"
+    },
+    "empty_key": {
+        "values": {
+            "": "value",
+            "k": ""
+        },
+        "encoded": "{\n    \"\": \"value\",\n    \"k\": \"\"\n}"
+    }
+}

@@ -53,3 +53,22 @@ output. Unless a key says otherwise the bar is 72 wide and one `#` stands for 30
 | `reused_id_after_finish` | a task finished, then started again under the same id |
 | `custom_bar_width` | running, 1 of 3, bar 10 wide |
 | `custom_units_per_hash` | started, then running at 10 with no total, 4 units per `#` |
+
+## `state_json.json`
+
+Every byte `state::State::write` puts on disk, captured by writing each set of values with
+uFBT and reading the file back. Each entry holds the `values` that were written and the
+`encoded` text they produced.
+
+| Key | Values |
+| --- | --- |
+| `typical` | a realistic state: hardware target, mode, channel, version, index URL |
+| `empty` | no keys at all |
+| `single` | one key |
+| `insertion_order` | four keys in an order that is neither sorted nor reversed |
+| `nulls` | a null next to a string |
+| `scalars` | integer, negative, zero, fractional and whole doubles, both booleans, null |
+| `nested_object` | a nested object, an object nested inside that, and an empty object |
+| `lists` | an empty list, a list of strings, and a list mixing every kind of value |
+| `escapes` | quote, backslash, the five short escapes, C0 controls, DEL, U+2028, a slash, non-ASCII text, an emoji, an empty string |
+| `empty_key` | an empty key and an empty value |
