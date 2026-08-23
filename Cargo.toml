@@ -24,11 +24,18 @@ image = { version = "=0.25.9", default-features = false, features = [
 md-5 = "0.11.0"
 regex = "1.13.1"
 reqwest = { version = "0.13.4", default-features = false, features = [
-    "rustls",
+    "rustls-no-provider",
     "stream",
     "charset",
     "http2",
 ] }
+rustls = { version = "0.23.43", default-features = false, features = [
+    "logging",
+    "ring",
+    "std",
+    "tls12",
+] }
+rustls-platform-verifier = "0.7.0"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = { version = "1.0.151", features = ["preserve_order"] }
 thiserror = "2.0.20"

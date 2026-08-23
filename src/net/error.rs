@@ -12,6 +12,9 @@ pub enum FetchError {
         /// Reason phrase returned by the server.
         reason: String,
     },
+    /// The TLS backend could not be initialized.
+    #[error("TLS initialization failed: {0}")]
+    Tls(String),
     /// The request could not be performed.
     #[error(transparent)]
     Request(#[from] reqwest::Error),
