@@ -203,4 +203,23 @@ impl Progress {
     pub fn percent(&self) -> Option<f64> {
         self.fraction().map(|value| value * 100.0)
     }
+
+    pub(crate) fn copy_with(
+        &self,
+        state: Option<ProgressState>,
+        current: Option<u64>,
+        total: Option<u64>,
+        message: Option<&str>,
+    ) -> Self {
+        Self {
+            id: self.id.clone(),
+            title: self.title.clone(),
+            state: state.unwrap_or(self.state),
+            current: current.unwrap_or(self.current),
+            total: total.or(self.total),
+            message: message
+                .map(ToOwned::to_owned)
+                .or_else(|| self.message.clone()),
+        }
+    }
 }

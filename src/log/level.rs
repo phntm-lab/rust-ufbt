@@ -37,6 +37,17 @@ impl LogLevel {
         }
     }
 
+    pub(crate) const fn from_severity(severity: u8) -> Option<Self> {
+        match severity {
+            10 => Some(Self::Debug),
+            20 => Some(Self::Info),
+            30 => Some(Self::Warning),
+            40 => Some(Self::Error),
+            50 => Some(Self::Critical),
+            _ => None,
+        }
+    }
+
     /// First letter of [`level_name`](LogLevel::level_name), used in formatted messages.
     #[must_use]
     pub const fn letter(self) -> char {
