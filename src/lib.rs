@@ -38,4 +38,4 @@ pub mod state;
 pub mod toolchain;
 
 pub use error::{Error, Result};
-pub use log::LogLevel;
+pub use log::{LogEvent, LogLevel};
