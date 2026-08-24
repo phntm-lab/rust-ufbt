@@ -1,17 +1,17 @@
 use std::fmt::Write as _;
 use std::fs;
 use std::io;
-use std::path::{MAIN_SEPARATOR, Path, PathBuf};
+use std::path::Path;
 use std::sync::Arc;
 
 use serde_json::{Map, Value};
-use tokio::sync::mpsc::{self, UnboundedSender};
-use zip::ZipArchive;
+use tokio::sync::mpsc;
 
 use super::loader::SdkLoader;
 use super::{
     BranchLoader, DeployTask, LocalLoader, SdkError, UpdateChannel, UpdateChannelLoader, UrlLoader,
 };
+use crate::archive::{ExtractEvent, extract_archive};
 use crate::log::{Logger, ProgressTask};
 use crate::net::FileFetcher;
 use crate::paths::Paths;
@@ -19,11 +19,6 @@ use crate::state::{ALWAYS_UPDATE_VERSIONS, State};
 
 const HW_TARGET_KEY: &str = "hw_target";
 const VERSION_KEY: &str = "version";
-
-enum ExtractEvent {
-    Total(u64),
-    Advanced(u64),
-}
 
 /// Deploys a Flipper Zero SDK into the uFBT home directory.
 pub struct SdkDeployer {
@@ -235,7 +230,7 @@ impl SdkDeployer {
                 if let Some(progress) = progress.as_mut() {
                     progress.fail_with_message(&error.to_string());
                 }
-                Err(error)
+                Err(error.into())
             }
         }
     }
@@ -296,49 +291,4 @@ fn render_value(value: &Value, out: &mut String) {
         }
         Value::Object(fields) => out.push_str(&render_values(fields)),
     }
-}
-
-fn safe_entry_path(target_dir: &Path, name: &str) -> Option<PathBuf> {
-    let parts: Vec<&str> = name.split(['/', '\\']).collect();
-    if parts.iter().any(|part| *part == ".." || *part == ".") {
-        return None;
-    }
-    let clean: Vec<&str> = parts.into_iter().filter(|part| !part.is_empty()).collect();
-    if clean.is_empty() {
-        return None;
-    }
-    let mut path = target_dir.to_string_lossy().into_owned();
-    for part in clean {
-        path.push(MAIN_SEPARATOR);
-        path.push_str(part);
-    }
-    Some(PathBuf::from(path))
-}
-
-fn extract_archive(
-    archive: &Path,
-    target_dir: &Path,
-    sender: &UnboundedSender<ExtractEvent>,
-) -> Result<(), SdkError> {
-    fs::create_dir_all(target_dir)?;
-
-    let mut zip = ZipArchive::new(fs::File::open(archive)?)?;
-    let total = zip.len();
-    let _ = sender.send(ExtractEvent::Total(total as u64));
-
-    for index in 0..total {
-        let mut entry = zip.by_index(index)?;
-        if let Some(path) = safe_entry_path(target_dir, entry.name()) {
-            if entry.is_dir() {
-                fs::create_dir_all(&path)?;
-            } else {
-                if let Some(parent) = path.parent() {
-                    fs::create_dir_all(parent)?;
-                }
-                io::copy(&mut entry, &mut fs::File::create(&path)?)?;
-            }
-        }
-        let _ = sender.send(ExtractEvent::Advanced(index as u64 + 1));
-    }
-    Ok(())
 }

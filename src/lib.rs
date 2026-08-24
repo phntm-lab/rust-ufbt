@@ -27,6 +27,7 @@
 
 #![deny(missing_docs)]
 
+mod archive;
 pub mod build;
 mod error;
 pub mod installer;

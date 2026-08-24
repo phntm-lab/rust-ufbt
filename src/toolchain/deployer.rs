@@ -22,10 +22,8 @@ static VERSION_RE: LazyLock<Regex> =
 
 /// Deploys the ARM GCC toolchain the SDK is built with into the uFBT home directory.
 pub struct ToolchainDeployer {
-    #[cfg_attr(windows, expect(dead_code))]
     pub(super) logger: Arc<Logger>,
     pub(super) paths: Paths,
-    #[cfg_attr(windows, expect(dead_code))]
     pub(super) fetcher: Arc<FileFetcher>,
 }
 
@@ -93,6 +91,39 @@ impl ToolchainDeployer {
     /// Returns [`ToolchainError::Process`] when `uname` cannot be started.
     pub fn toolchain_url(&self, version: &str) -> Result<String, ToolchainError> {
         Ok(toolchain_url(&self.arch_dir_name()?, version))
+    }
+
+    /// Deploys the toolchain the SDK asks for.
+    ///
+    /// Returns `Ok(true)` when the toolchain is in place — either freshly unpacked, or
+    /// already up to date — and `Ok(false)` when it could not be deployed for a reason that
+    /// was written to the log instead: the archive could not be downloaded or unpacked, it
+    /// did not hold the directory it was expected to hold, or, on Unix, `tar` is unavailable
+    /// or exited with a failure.
+    ///
+    /// A toolchain of a known version is left alone when `force` is not set and its version
+    /// is the one the SDK asks for. An already downloaded archive is reused as it is found.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ToolchainError::Process`] when `uname` or `tar` cannot be started, and
+    /// [`ToolchainError::Io`] when the toolchain directory cannot be replaced, linked to or
+    /// cleaned up. Creating the `current` link on Windows requires either administrator
+    /// rights or Developer Mode, exactly as it does in the reference implementation; without
+    /// them the deployment fails with a permission error.
+    pub async fn deploy(&self, force: bool) -> Result<bool, ToolchainError> {
+        let info = self.status()?;
+
+        if !force && info.is_deployed() && info.installed_version().is_some() {
+            if info.is_up_to_date() {
+                return Ok(true);
+            }
+            if !cfg!(windows) {
+                self.logger.raw("FBT: starting toolchain upgrade process..");
+            }
+        }
+
+        self.deploy_platform(&info).await
     }
 
     /// Reports which toolchain is wanted and which one is deployed.

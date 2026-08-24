@@ -2,6 +2,8 @@
 
 #[cfg(not(windows))]
 mod deploy_unix;
+#[cfg(windows)]
+mod deploy_windows;
 mod deployer;
 mod error;
 mod info;

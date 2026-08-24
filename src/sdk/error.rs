@@ -1,5 +1,6 @@
 use std::io;
 
+use crate::archive::ExtractError;
 use crate::net::FetchError;
 
 /// Failure of SDK channel resolution or SDK deployment.
@@ -76,4 +77,13 @@ pub enum SdkError {
     /// A file system operation failed.
     #[error(transparent)]
     Io(#[from] io::Error),
+}
+
+impl From<ExtractError> for SdkError {
+    fn from(error: ExtractError) -> Self {
+        match error {
+            ExtractError::Zip(error) => Self::Zip(error),
+            ExtractError::Io(error) => Self::Io(error),
+        }
+    }
 }

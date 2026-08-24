@@ -15,36 +15,10 @@ use crate::paths::join;
 const PRESERVE_TAR_VAR: &str = "FBT_PRESERVE_TAR";
 
 impl ToolchainDeployer {
-    /// Deploys the toolchain the SDK asks for.
-    ///
-    /// Returns `Ok(true)` when the toolchain is in place — either freshly unpacked, or
-    /// already up to date — and `Ok(false)` when it could not be deployed for a reason that
-    /// was written to the log instead: `tar` is unavailable, the archive could not be
-    /// downloaded, `tar` exited with a failure, or the archive did not hold the directory it
-    /// was expected to hold.
-    ///
-    /// A toolchain of a known version is left alone when `force` is not set and its version
-    /// is the one the SDK asks for. A downloaded archive is reused as it is found.
-    ///
-    /// # Errors
-    ///
-    /// Returns [`ToolchainError::Process`] when `uname` or `tar` cannot be started, and
-    /// [`ToolchainError::Io`] when the toolchain directory cannot be replaced, linked to or
-    /// cleaned up.
-    pub async fn deploy(&self, force: bool) -> Result<bool, ToolchainError> {
-        let info = self.status()?;
-
-        if !force && info.is_deployed() && info.installed_version().is_some() {
-            if info.is_up_to_date() {
-                return Ok(true);
-            }
-            self.logger.raw("FBT: starting toolchain upgrade process..");
-        }
-
-        self.deploy_unix(&info).await
-    }
-
-    async fn deploy_unix(&self, info: &ToolchainInfo) -> Result<bool, ToolchainError> {
+    pub(super) async fn deploy_platform(
+        &self,
+        info: &ToolchainInfo,
+    ) -> Result<bool, ToolchainError> {
         if !self.check_tar().await {
             return Ok(false);
         }
